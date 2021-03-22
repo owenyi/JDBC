@@ -47,60 +47,70 @@ public class BookDAOImpl implements BookDAO {
 		if (rs != null) rs.close();
 		closeAll(ps, conn);
 	}
-	
+
+//	public int isIsbn(String isbn) throws SQLException {
+//		Connection conn = null;
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			// 2.
+//			conn = getConnect();
+//			
+//			// 3.
+//			String query = "SELECT count(*) FROM book WHERE isbn=?";
+//			ps = conn.prepareStatement(query);
+//			
+//			// 4.
+//			ps.setString(1, isbn);
+//			rs = ps.executeQuery();
+//			if (rs.next()) return rs.getInt(1); // 첫번째 찰럼이 isbn : String임 
+//			return 0;
+//		} finally {
+//			closeAll(rs, ps, conn);
+//		}
+//	}
+	public boolean isIsbn(String isbn, Connection conn) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		// 3.
+		String query = "SELECT isbn FROM book WHERE isbn=?";
+		ps = conn.prepareStatement(query);
+
+		// 4.
+		ps.setString(1, isbn);
+		rs = ps.executeQuery();
+		return rs.next();
+	}
 	@Override
 	public void registerBook(Book vo) throws SQLException, DuplicateISBNException {
-//		Connection conn = null;
-//		PreparedStatement ps1 = null; PreparedStatement ps2 = null;
-//		
-//		conn = getConnect();
-//		System.out.println("DB 서버 연결");
-//		
-//		String query1 = "SELECT * FROM book";
-//		ps1 = conn.prepareStatement(query1);
-//		System.out.println("Prepared 객체 생성");
-//		
-//		ResultSet rs = ps1.executeQuery();
-//		if (rs.next()) throw new DuplicateISBNException();
-//		
-//		String query2 = "INSERT INTO employee VALUES (?, ?, ?, ?, ?)";
-//		ps2 = conn.prepareStatement(query2);
-//		System.out.println("Prepared 객체 생성");
-//		
-//		ps2.setString(1, vo.getIsbn());
-//		ps2.setString(2, vo.getTitle());
-//		ps2.setString(3, vo.getWriter());
-//		ps2.setString(4, vo.getPublisher());
-//		ps2.setInt(5, vo.getPrice());
-//		System.out.println(ps2.executeUpdate() + "항목 추가되었습니다.");
-//		
-//		cloaseAll(ps1, )
+		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
-		conn = getConnect();
-		System.out.println("DB 서버 연결");
-		
-		String query1 = "SELECT * FROM book WHERE isbn=?";
-		ps = conn.prepareStatement(query1);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, vo.getIsbn());
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) throw new DuplicateISBNException();
-		
-		String query2 = "INSERT INTO book VALUES (?, ?, ?, ?, ?)";
-		ps = conn.prepareStatement(query2);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, vo.getIsbn());
-		ps.setString(2, vo.getTitle());
-		ps.setString(3, vo.getWriter());
-		ps.setString(4, vo.getPublisher());
-		ps.setInt(5, vo.getPrice());
-		System.out.println(ps.executeUpdate() + "항목 추가되었습니다.");
-		
-		closeAll(ps, conn);
+		try {
+			// 2.
+			conn = getConnect();
+			
+			if (!isIsbn(vo.getIsbn(), conn)) {
+				// 3.
+				String query = "INSERT INTO book VALUES (?, ?, ?, ?, ?)";
+				ps = conn.prepareStatement(query);
+				
+				// 4.
+				ps.setString(1, vo.getIsbn());
+				ps.setString(2, vo.getTitle());
+				ps.setString(3, vo.getWriter());
+				ps.setString(4, vo.getPublisher());
+				ps.setInt(5, vo.getPrice());
+				System.out.println(ps.executeUpdate() + "항목 추가되었습니다.");
+			} else {
+				throw new DuplicateISBNException();
+			}			
+		} finally {
+			closeAll(ps, conn);
+		}
 	}
 
 	@Override
@@ -108,24 +118,23 @@ public class BookDAOImpl implements BookDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
-		conn = getConnect();
-		
-		String query1 = "SELECT * FROM book WHERE isbn=?";
-		ps = conn.prepareStatement(query1);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, isbn);
-		ResultSet rs = ps.executeQuery();
-		if (!rs.next()) throw new BookNotFoundException();
-		
-		String query2 = "DELETE FROM book WHERE isbn=?";
-		ps = conn.prepareStatement(query2);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, isbn);
-		System.out.println(ps.executeUpdate() + "항목 삭제되었습니다.");
-		
-		closeAll(ps, conn);
+		try {
+			// 2.
+			conn = getConnect();
+			
+			// 3.
+			String query = "DELETE FROM book WHERE isbn=?";
+			ps = conn.prepareStatement(query);
+			System.out.println("Prepared 객체 생성");
+			
+			// 4.
+			ps.setString(1, isbn);
+			int row = ps.executeUpdate();
+			if (row == 0) throw new BookNotFoundException();
+			else System.out.println(row + "항목 삭제되었습니다.");
+		} finally {
+			closeAll(ps, conn);
+		}
 	}
 
 	@Override
@@ -134,26 +143,32 @@ public class BookDAOImpl implements BookDAO {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		conn = getConnect();
+		try {
+			// 2.
+			conn = getConnect();
+			
+			// 3.
+			String query = "SELECT * FROM book WHERE isbn=? AND title=?";
+			ps = conn.prepareStatement(query);
+			
+			// 4.
+			ps.setString(1, isbn);
+			ps.setString(2, title);
+			rs = ps.executeQuery();
+			if (rs.next()) 
+				book = new Book(
+						rs.getString("isbn"), 
+						rs.getString("title"), 
+						rs.getString("author"), 
+						rs.getString("publisher"), 
+						rs.getInt("price")
+						);
+		} finally {
+			closeAll(ps, conn);
+		}
 		
-		String query = "SELECT * FROM book WHERE isbn=? AND title=?";
-		ps = conn.prepareStatement(query);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, isbn);
-		ps.setString(2, title);
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) 
-			book = new Book(
-					rs.getString("isbn"), 
-					rs.getString("title"), 
-					rs.getString("author"), 
-					rs.getString("publisher"), 
-					rs.getInt("price")
-					);
-		
-		closeAll(ps, conn);
 		return book;
 	}
 
@@ -163,26 +178,32 @@ public class BookDAOImpl implements BookDAO {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		conn = getConnect();
-		
-		String query = "SELECT * FROM book WHERE author=?";
-		ps = conn.prepareStatement(query);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setString(1, writer);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			list.add(new Book(
-					rs.getString("isbn"), 
-					rs.getString("title"), 
-					rs.getString("author"), 
-					rs.getString("publisher"), 
-					rs.getInt("price")
-					));
+		try {
+			// 2.
+			conn = getConnect();
+			
+			// 3.
+			String query = "SELECT * FROM book WHERE author=?";
+			ps = conn.prepareStatement(query);
+			
+			// 4.
+			ps.setString(1, writer);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(new Book(
+						rs.getString("isbn"), 
+						rs.getString("title"), 
+						writer, // rs.getString("author") 이렇게 할 필요가 없음
+						rs.getString("publisher"), 
+						rs.getInt("price")
+						));
+			}
+		} finally {
+			closeAll(ps, conn);
 		}
 		
-		closeAll(ps, conn);
 		return list;
 	}
 
@@ -192,6 +213,7 @@ public class BookDAOImpl implements BookDAO {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
 		conn = getConnect();
 		
@@ -200,7 +222,7 @@ public class BookDAOImpl implements BookDAO {
 		System.out.println("Prepared 객체 생성");
 		
 		ps.setString(1, publisher);
-		ResultSet rs = ps.executeQuery();
+		rs = ps.executeQuery();
 		while (rs.next()) {
 			list.add(new Book(
 					rs.getString("isbn"), 
@@ -217,33 +239,40 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public ArrayList<Book> findByPrice(int min, int max) throws SQLException, InvalidInputException {
-		if (max < min) throw new InvalidInputException();
+		if (min <= 0 || min >= max) throw new InvalidInputException();
 		
 		ArrayList<Book> list = new ArrayList<Book>();
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		conn = getConnect();
-		
-		String query = "SELECT * FROM book WHERE price<=? AND price>=?";
-		ps = conn.prepareStatement(query);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setInt(1, max);
-		ps.setInt(2, min);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			list.add(new Book(
-					rs.getString("isbn"), 
-					rs.getString("title"), 
-					rs.getString("author"), 
-					rs.getString("publisher"), 
-					rs.getInt("price")
-					));
+		try {
+			// 2.
+			conn = getConnect();
+			
+			// 3.
+			String query = "SELECT * FROM book WHERE price>=? AND price<=?";
+			ps = conn.prepareStatement(query);
+			System.out.println("Prepared 객체 생성");
+			
+			// 4.
+			ps.setInt(1, min);
+			ps.setInt(2, max);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(new Book(
+						rs.getString("isbn"), 
+						rs.getString("title"), 
+						rs.getString("author"), 
+						rs.getString("publisher"), 
+						rs.getInt("price")
+						));
+			}
+		} finally {
+			closeAll(ps, conn);
 		}
 		
-		closeAll(ps, conn);
 		return list;
 	}
 
@@ -252,42 +281,40 @@ public class BookDAOImpl implements BookDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
-		conn = getConnect();
-		
-		String query = "UPDATE book SET price=price*?/100 WHERE publisher=?";
-		ps = conn.prepareStatement(query);
-		System.out.println("Prepared 객체 생성");
-		
-		ps.setInt(1, per);
-		ps.setString(2, publisher);
-		System.out.println(ps.executeUpdate() + "항목 할인되었습니다.");
-		
-		closeAll(ps, conn);
+		try {
+			conn = getConnect();
+			
+			String query = "UPDATE book SET price=price*(1-?/100) WHERE publisher=?";
+			ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, per);
+			ps.setString(2, publisher);
+			System.out.println(ps.executeUpdate() + "항목 할인되었습니다.");
+		} finally {
+			closeAll(ps, conn);
+		}
 	}
 
 	@Override
 	public void printAllInfo() throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		conn = getConnect();
-		
-		String query = "SELECT * FROM book";
-		ps = conn.prepareStatement(query);
-		System.out.println("Prepared 객체 생성");
-		
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			System.out.println(
-					rs.getString("isbn") + "\t"
-					+ rs.getString("title") + "\t" + "\t"
-					+ rs.getString("author") + "\t"
-					+ rs.getString("publisher") + "\t"
-					+ rs.getInt("price")
-					);
+		try {
+			conn = getConnect();
+
+			String query = "SELECT * FROM book";
+			ps = conn.prepareStatement(query);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				System.out.println(rs.getString("isbn") + "\t" + rs.getString("title") + "\t" + "\t"
+						+ rs.getString("author") + "\t" + rs.getString("publisher") + "\t" + rs.getInt("price"));
+			}
+		} finally {
+			closeAll(ps, conn);
 		}
-		
-		closeAll(ps, conn);
 	}
 	
 }

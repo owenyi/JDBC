@@ -8,45 +8,57 @@ import com.encore.exception.DuplicateISBNException;
 import com.encore.exception.InvalidInputException;
 import com.encore.vo.Book;
 
+import config.ServerInfo;
+
 public class BookDAOTest {
 
 	public static void main(String[] args) throws SQLException{
 
-		BookDAOImpl book = BookDAOImpl.getInstance();
+		BookDAOImpl dao = BookDAOImpl.getInstance();
+//		try {
+//			dao.registerBook(new Book("8H8", "자율주행2", "로드만", "encore", 34000));
+//			System.out.println("책 등록 성공");
+//		} catch (Exception e) {
+//			System.out.println("책 등록 실패");
+//		}
+		
+//		try {
+//			dao.deleteBook("8H8");
+//		} catch (Exception e) {
+//			
+//		}
+		
+//		try {
+//			for (Book b : dao.findByWriter("나가타")) {
+//				System.out.println(b);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+//		try {
+//			for (Book b: dao.findByPrice(10000, 20000))
+//				System.out.println(b);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		try {
-			book.registerBook(new Book("111", "개미", "베르나르", "열린책들", 12000));
-		} catch (DuplicateISBNException e) {
-			
+			dao.discountBook(00, "동아");
+			dao.printAllInfo();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
+	}
+	
+	static {
 		try {
-			book.deleteBook("111");
-		} catch (BookNotFoundException e) {
-			
+			Class.forName(ServerInfo.DRIVER);
+			System.out.println("드라이버 로딩 성공~~!!");
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패~~!!");
 		}
-		
-		System.out.println(book.findByBook("1A1", "강아지똥"));
-		
-		for (Book b : book.findByWriter("나가타")) {
-			System.out.println(b);
-		}
-		
-		for (Book b : book.findByPublisher("동아")) {
-			System.out.println(b);
-		}
-		
-		try {
-			for (Book b : book.findByPrice(27000, 34000)) {
-				System.out.println(b);
-			}
-		} catch (InvalidInputException e) {
-			System.out.println(e);
-		}
-		
-		book.discountBook(50, "동아");
-		
-		book.printAllInfo();
 	}
 
 }
