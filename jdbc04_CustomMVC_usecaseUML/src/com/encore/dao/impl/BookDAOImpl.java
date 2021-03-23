@@ -64,7 +64,7 @@ public class BookDAOImpl implements BookDAO {
 //			// 4.
 //			ps.setString(1, isbn);
 //			rs = ps.executeQuery();
-//			if (rs.next()) return rs.getInt(1); // 첫번째 찰럼이 isbn : String임 
+//			if (rs.next()) return rs.getInt(1); // ??첫번째 찰럼이 isbn : String임 -> 해결 : query를 다시 보기
 //			return 0;
 //		} finally {
 //			closeAll(rs, ps, conn);
