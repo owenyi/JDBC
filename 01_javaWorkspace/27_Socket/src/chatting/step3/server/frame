@@ -1,0 +1,73 @@
+package chatting.step3.server;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+/*
+ * 여러 명의 클라이언트 접속을 받아서
+ * 문자 기반의 메세지를 주고 받을 수 있는
+ * 서버측 로직을 작성
+ * 
+ * ChatServer - - - - Process
+ *   |-----> ServerSocket, ArrayList, Socket
+ *           braodcast()
+ *  
+ * ChatTread - - - - Thread
+ *   |-----> Socket, BufferedReader, PrintWriter
+ */
+public class ChatServer {
+	
+	ServerSocket server;
+	Socket s;
+	ArrayList<ChatThread> list;
+	
+	public ChatServer() {
+		list = new ArrayList<ChatThread>();
+	}
+	
+	public void net() {
+		try {
+			server = new ServerSocket(60000);
+			System.out.println("Server Ready...");
+			
+			while (true) { //윙윙윙...waiting for...
+				s = server.accept();
+				ChatThread ct = new ChatThread(s);
+				list.add(ct);
+				ct.start(); // ...작업이 병렬적으로 진행된다...
+			}
+		} catch (IOException e) {
+			
+		} finally {
+			
+		}
+	}
+	
+	public static void main(String[] args) {
+
+		ChatServer process = new ChatServer();
+		process.net();
+		
+	}
+
+}
+
+// 서버와 연결된 클라이언트와 메세지를 주고 받는 일만 전담하는 쓰레드...작업쓰레드
+class ChatThread extends Thread {
+	Socket s;
+	BufferedReader br;
+	PrintWriter pw;
+	
+	ChatThread(Socket s) {
+		this.s = s;
+	}
+	
+	public void run() {
+		// 실제로 쓰레드가 작업하는 내용...
+	}
+	
+}
