@@ -1,1 +1,1 @@
-# Encore Playdata JDBC
+# Encore Playdata
