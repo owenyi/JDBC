@@ -133,6 +133,14 @@ public class Broker implements ActionListener, ItemListener, Runnable {
 		portList.setBackground(new Color(142, 142, 255));
 		sellTf.setBackground(new Color(196, 196, 255));
 		
+		//////////////////////////// Ticker Tape 붙이기 (전광판 효과) ///////////////////////////////////
+		TickerTape tt = new TickerTape("127.0.0.1", 700);
+		tt.setSize(700, 300);
+		new Thread(tt).start();
+		
+		frame.add(tt, "North");
+		////////////////////////////////////////////////////////////////////////////////////////////
+		
 		frame.add(pc, "Center");
 		frame.add(pe, "East");
 		// ******************* 컴포넌트 부착 ************************************
