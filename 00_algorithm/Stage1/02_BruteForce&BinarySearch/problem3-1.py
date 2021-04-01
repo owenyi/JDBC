@@ -1,4 +1,5 @@
-# 숫자카드
+# 10816 숫자카드2
+
 import sys
 input = sys.stdin.readline # 그냥 input보다 빠름
 from collections import Counter # 개수 dict
