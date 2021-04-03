@@ -6,9 +6,9 @@ package greet;
  */
 public class MyGreet {
 	
-	public String message = "Hello"; // Field
+	public String message = "Hello"; // Field : 선언 + 할당
 	
-	public void sayHello(String name) { // Method
+	public void sayHello(String name) { // Method : 선언부, 구현부
 		System.out.println(message + ", " + name);
 	}
 	
