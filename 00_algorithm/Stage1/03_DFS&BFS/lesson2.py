@@ -10,6 +10,7 @@ def solution(data, start, end, number):
     destination = end
     queue = [start]
     visited = [False for i in range(number)]
+    visited[start - 1] = True
     while len(queue) > 0:
         count = len(queue)
         for time in range(count):
@@ -23,6 +24,7 @@ def solution(data, start, end, number):
                 elif i[1] == now and visited[i[0]-1] == False:
                     queue.append(i[0])
                     visited[i[0]-1] = True
+                print(visited)
         answer += 1
     return -1 # 정답이 없을 경우 -1을 반환
 
