@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- 
+DOM
+html 문서의 조작과 관련된 api
+html 문서의 생성, 삭제, 변경, 검색...등등이 가능하다.
+ -->
+<script>
+	window.onload = function() {
+		// 1.
+		/* var header1 = document.getElementById("header1");
+		var header2 = document.getElementById("header2");
+		var header3 = document.getElementById("header3");
+		
+		header1.innerHTML = '<h2><font color=red>Using getElementById()...</h2>'; */
+		
+		// 2.
+		var headers = document.getElementsByTagName('h1');
+		alert(headers); // HTLMCollection...배열이다
+		alert(headers.length); // 배열인지 확인하는 다른 방법
+		for (var i = 0; i < headers.length; i++) {
+			headers[i].innerHTML = "Using getElementsByTagName()...";
+		}
+	};
+</script>
+
+</head>
+<body>
+	<h1 id="header1">Header - 1</h1>
+	<h1 id="header2">Header - 2</h1>
+	<h1 id="header3">Header - 3</h1>
+</body>
+</html>

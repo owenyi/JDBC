@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	function choiceAngel() {
+		var arr = document.frm.angel;
+		var str = "";
+		for (var i = 0; i < arr.length; i++) {
+			if (arr[i].checked) str += arr[i].value + " ";
+			arr[i].checked = false; // 체크 해제
+		}
+		if (str == "") {
+			alert("한 명 이상 선택하세요");
+		} else {
+			alert("당신의 이상형은 " + str + "입니다.");
+		}
+	}
+</script>
+
+</head>
+<body>
+	<form name="frm">
+		<strong>이상형 선택(중복 선택 가능)</strong><br><br>
+		<input type="checkbox" name="angel" value="아이유">아이유<br>
+		<input type="checkbox" name="angel" value="김민경">김민경<br>
+		<input type="checkbox" name="angel" value="박세리">박세리<br>
+		<input type="checkbox" name="angel" value="김소연">김소연<br>
+		<input type="checkbox" name="angel" value="현아">현아<br>
+		<input type="button" value="choice" onclick="choiceAngel()">
+	</form>
+</body>
+</html>

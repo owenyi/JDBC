@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 
+앞의 js11 참조하여서 작성합니다.
+해보기
+Student 생성자 함수를 선언
+인자값 - name, java성적, python성적, html성적
+함수1 total() : 점수의 총합
+함수2 avg() : 점수의 평균
+함수3 record() : 정보의 출력
+ -->
+</head>
+<body>
+	<h2>JavaScript Object : ConstructorMy</h2>
+	
+	<script>
+		function Student(name, java, python, html) {
+			this.name = name;
+			this.java = java;
+			this.python = python;
+			this.html = html;
+			
+			this.total = () => java + python + html;
+			this.avg = () => this.total() / 3;
+			this.record = function() {
+				document.write('<h2>학생 성적</h2>');
+				document.write('<h3>학생 이름 : ' + this.name + '</h3>');
+				document.write('<h3>자바 성적 : ' + this.java + '</h3>');
+				document.write('<h3>파이썬 성적 : ' + this.python + '</h3>');
+				document.write('<h3>html 성적 : ' + this.html + '</h3>');
+				document.write('<h3>점수 총합 : ' + this.total() + '</h3>');
+				document.write('<h3>점수 평균 : ' + this.avg() + '</h3>');
+			}
+		}
+		
+		var s1 = new Student("James1", 89, 90, 100);
+		var s2 = new Student("James2", 89, 90, 100);
+		var s3 = new Student("James3", 89, 90, 100);
+		
+		s1.record();
+		s2.record();
+		s3.record();
+	</script>
+</body>
+</html>

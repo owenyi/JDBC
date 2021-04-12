@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery ready</title>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+ /*
+  * JQuery :
+  *   자바스크립트 라이브러리
+  * 
+  *   window.onload와 기능은 동일하나 여러 개 함수 사용 가능한 것이
+  *   JQuery의 ready 함수이다.
+  */
+	$(document).ready(function() {
+		var list = ''; // 값에 의해서 데이터 타입이 동적으로 할당
+		list += "<ul>";
+		list += "<li>Hello</li>";
+		list += "<li>Javascript</li>";
+		list += "</ul>";
+		
+		document.body.innerHTML += list;
+	})
+ </script>
+
+</head>
+<body>
+	<h2>=====onLoad=====</h2>
+</body>
+</html>

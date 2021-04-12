@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>hoisting</title>
+
+<script>
+	var name = "James"; // 전역변수...함수 선언 바깥에 정의
+	function showName() {
+		var name = "Peter"; // 지역변수...함수 선언 안족에 정의
+		console.log(name); // Peter
+	}
+	
+	console.log(name); // James
+	showName(); // Peter
+	
+	// 2.
+	dosomething();
+	
+	function dosomething() {
+	/*
+	 * some 변수 선언보다 출력이 위에 있기 때문에 에러가 날 것 같으나
+	 * 이 함수를 실행해보면 에러가 안 난다.
+	 * 함수 최상단에 var some(값은 x)이 hoisting된다.
+	 */
+		alert("정의되어 있지 않은 변수 " + some); // (2)
+		
+		var some = "Hello Function!!!"; // (1) 선언부가 함수 최상단으로 끌어올려진다.
+		alert("정의되어 있는 변수 " + some); // (3)
+	}
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>variable</title>
+
+<script>
+	var myName = "Peter"; // 전역변수
+	name = "James";
+	
+	console.log(myName); // Peter
+	console.log(name); // James
+	function showAge() {
+		// var age = 90; // 지역변수
+		age = 90;
+	}
+	showAge();
+	console.log(age); //  출력된다...showAge() 안에 age가 전역변수가 되어버렸다.
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
