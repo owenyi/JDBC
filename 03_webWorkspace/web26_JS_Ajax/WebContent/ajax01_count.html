@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	var xhr;
+	function startRequest() {
+		// 1. XMLHttpRequest 객체를 생성
+		// var xhr = new XMLHttpRequest(); // 전역으로 만들어줘야 함
+		xhr = new XMLHttpRequest();
+		// alert(xhr);
+		
+		// 2. 응답받을 함수를 연결
+		xhr.onreadystatechange = callback;
+
+		// 3. open 메소드 안에서 서버상의 어떤 페이지로 요청이 들어갈지를 지정
+		xhr.open("get", "CountServlet?id=encore&pass=playdata"); // (default)true 비동기 // false 동기 
+
+		// 4. 서버로 요청이 전송
+		xhr.send(null); // get 방식이기 때문에 null
+	}
+	function callback() {
+		if (xhr.readyState == 4) { // xhr이 있으면
+			if (xhr.status == 200) {
+				var text = xhr.responseText; // out.print(); 이 안에 넣어서 보낸 text를 받아온다.
+				document.getElementById("resultView").innerHTML = "<h3><font color='blue'>" + text + "</font></h3>";
+			}
+		}
+	}
+</script>
+
+</head>
+<body>
+	<h2>Show Count</h2>
+	<input type="button" value="Count 증가" onclick="startRequest()">
+	<p></p>
+	<span id="resultView"></span>
+</body>
+</html>

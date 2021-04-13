@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+    var xhr;
+    var nickfrm;
+    function startRequest() { // 요청 내용을 처리하는 함수
+        xhr = new XMLHttpRequest();
+        // alert(xhr.readyState); // 0
+
+        nickfrm = document.frm.nick;
+
+        xhr.onreadystatechange = callback;
+        // alert(xhr.readyState); // 0
+		
+        // xhr.open("get", "EncodingServlet?nick=" + nickfrm.value);
+        xhr.open("get", "EncodingServlet?nick=" + encodeURI(encodeURIComponent(nickfrm.value))); // 한글처리
+        // alert(xhr.readyState); // 1 목적지 정함
+
+        xhr.send(null);
+    }
+    function callback() { // 응답받은 내용을 처리하는 함수
+    	// alert("callback...");
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                document.getElementById("resultView").innerHTML = 
+                    // "<font color=orange size=5>" + xhr.responseText + "</font>";
+                    "<font color=orange size=5>" + decodeURI(decodeURIComponent(xhr.responseText)) + "</font>"; // 한글처리
+            }
+        } else {
+            document.getElementById("resultView").innerHTML = "<img src='img/a.gif'>";
+        }
+        nickfrm.value = "";
+        nickfrm.focus();
+    }
+</script>
+
+</head>
+<body>
+    <h2>JavaScript Get방식에서 한글 처리하기</h2>
+    <form action="EncodingServlet" name="frm">
+        닉네임 <input type="text" name="nick">
+        <input type="button" value="닉네임보내기" onclick="startRequest()">
+        <div id="resultView"></div>
+    </form>
+</body>
+</html>
