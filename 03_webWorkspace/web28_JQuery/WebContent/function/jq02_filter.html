@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	// filter 함수는 동일한 태그들이 있을 때 여러 개의 태그들 중에서 조건에 따라 태그를 걸러낼 떄 사용
+    	// 1.
+    	/*
+    	// $('h1').filter(function (index) {
+    	// 	return index % 3 == 0 || index % 5 == 0;
+		// }).css({
+		// 	background: 'greenyellow',
+		// 	color: 'blue'
+		// })
+		$('h1').filter(function (index) {
+    		return index % 3 == 0 || index % 5 == 0;
+		}).addclass('css');
+		*/
+		
+		// 2. h1 태그 중에서 짝수 번째 red 홀수 번째 blue
+		$('h1:even').addClass('redColor');
+		$('h1').filter(':odd').addClass('blueColor');
+	});
+</script>
+
+<style>
+	.css { background: greenyellow; color: blue; }
+	.redColor { color: red }
+	.blueColor { color: blue }
+</style>
+
+</head>
+<body>
+	<h1>Item - 0</h1>
+	<h1>Item - 1</h1>
+	<h1>Item - 2</h1>
+	<h1>Item - 3</h1>
+	<h1>Item - 4</h1>
+	<h1>Item - 5</h1>
+	<h1>Item - 6</h1>
+	<h1>Item - 7</h1>
+</body>
+</html>
