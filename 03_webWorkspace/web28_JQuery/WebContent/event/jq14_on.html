@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	// div 영역을 클릭하면 함수 호출되도록...p태그 부분에 <h2>Encore PlayData</h2>
+    	/* $('div').click(function () {
+    		$('p').append('<h2>Encore PlayData</h2>');
+		}); */
+		/* $('div').bind('click', function () {
+    		$('p').append('<h2>Encore PlayData</h2>');
+		}); */
+		
+		/* $('div').one('click', function () {
+    		// $('p').append('<h2>Encore PlayData</h2>');
+    		$(this).after('<h2>Encore PlayData</h2>');
+    		$('h2').one('click', function () {
+    			$(this).after('<h2>Encore PlayData</h2>');
+			});
+		}); */
+		
+		/* 이건 내 시도
+		$('h2').one('click', function () {
+    		$(this).after('<h2>Encore PlayData</h2>');
+		});
+		// 처음에는 없었지만...나중에 동적으로 생성될 태그에이벤트 적용하는 함수...on()
+		$('h2').on('click', function () {
+    		$(this).after('<h2>Encore PlayData</h2>');
+		});
+		*/
+		
+		// 좀 이상함...
+		$('div').click(function () {
+    		$('#future').append('<h2 id="hello">Encore PlayData</h2>');
+		});
+		// 처음에는 없었지만...나중에 동적으로 생성될 태그에이벤트 적용하는 함수...on()
+		$('#future').on('click', '#hello', onhello);
+	});
+	
+	function onhello() {
+		alert("onhello calling...");
+	}
+</script>
+
+<style>
+	div { border-radius: 10px; border: 1px solid red; }
+</style>
+
+</head>
+<body>
+	<div>
+		<h1>$(selector).on</h1>
+		<p>on 함수 사용하기 : 클릭 함수와 동일하지만 차이점 존재</p>
+	</div>
+	<div id="future"></div>
+</body>
+</html>

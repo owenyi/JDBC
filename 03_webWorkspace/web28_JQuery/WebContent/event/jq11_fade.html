@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	// 1. 이미지 처음 로딩됐을 때 보이지 않도록 감춘다...hide() | show()
+    	$('#imageView').hide();
+    	
+    	// 2. 마우스가 특정 영역 안에 들어가면 보이고 / 마우스가 특정 영역 밖으로 나오면 이미지 감춰지고
+    	/* $('#mouseIn').mouseenter(function () {
+    		// $('#imageView').show();
+    		// $('#imageView').show(3000);
+    		// $('#imageView').fadeIn();
+    		$('#imageView').fadeIn(3000);
+		});
+		$('#mouseIn').mouseleave(function () {
+    		// $('#imageView').hide();
+    		// $('#imageView').hide(1000);
+    		// $('#imageView').fadeOut();
+    		$('#imageView').fadeOut(3000);
+		}); */
+		$('#mouseIn').hover(function (args) {
+    		$('#imageView').show();
+		}, function (args) {
+    		$('#imageView').hide();
+		});
+	});
+</script>
+
+<style>
+	#mouseIn { background: yellow; }
+</style>
+
+</head>
+<body>
+	<h2 id="mouseIn">++++++++++ 사진 보이기 ++++++++++</h2>
+	<div id="imageView">
+		<img alt="" src="../image/1.jpg" width="300" height="400">
+	</div>
+</body>
+</html>
