@@ -19,12 +19,18 @@
 	}
 
 	var xhr;
-
+	var resultView;
+	
 	function startRequest() {
-		xhr = new XMLHttpRequest();
-
 		var id = document.registerForm.id.value;
-
+		resultView = document.getElementById("idCheckResult");
+		if (id.length < 4) {
+			resultView.innerHTML = "<font color='red'>아이디는 4자 이상!!</font>";
+			return;
+		}
+		
+		// 4글자 이상이면 비동기통신으로 로직을 전개시킨다.
+		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = callback;
 		xhr.open("post", "idCheck.do", true)
 		xhr.setRequestHeader("Content-Type", 
@@ -34,11 +40,11 @@
 	function callback() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var flag = xhr.responseText;
-			var resultView = document.getElementById("idCheckResult")
+			resultView = document.getElementById("idCheckResult");
 			if (flag == 'true')
 				resultView.innerHTML = "<font color='red'><b>ID 사용 불가!!</b></font>";
 			else
-				resultView.innerHTML = "<font color='red'><b>ID 사용 가능!!</b></font>";
+				resultView.innerHTML = "<font color='green'><b>ID 사용 가능!!</b></font>";
 		}
 	}
 </script>
@@ -46,8 +52,8 @@
 <body>
 <h2 align="center"><b>Register Member Form....</b></h2><p>
 <form action="register.do" method="post" name="registerForm" onsubmit="return passCheck()">
-ID : <input type="text" name="id" required="required">
-<input type="button" value="중복확인" onclick="startRequest()">
+ID : <input type="text" name="id" required="required" onkeyup="startRequest()">
+<!-- <input type="button" value="중복확인" onclick="startRequest()"> -->
 <span id="idCheckResult"></span>
 <br><br>
 PASSWORD : <input type="password" name="password" required="required"><br><br>
