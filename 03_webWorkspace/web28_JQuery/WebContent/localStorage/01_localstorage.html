@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	// 1. 저장
+    	$('#saveBtn').click(function() {
+    		// 로컬 스토리지에 저장...setItem()
+    		localStorage.setItem("key1", "안녕");
+    		localStorage.key2 = "HI";
+    		localStorage["key3"] = "HELLO";
+    	});
+    	
+    	// 2. 삭제
+    	$('#deleteBtn').click(function() {
+    		localStorage.removeItem("key1");
+    	});
+    	
+    	// 3. 전체삭제
+    	$('#deleteAllBtn').click(function() {
+    		localStorage.clear(); // localStorage의 모든 내용을 삭제...주의!!
+    	});
+    	
+    	// 4. 내용보기
+    	$('#showBtn').click(function() {
+    		alert(localStorage.getItem("key1") + ", " );
+    	});
+	});
+</script>
+
+<style>
+
+</style>
+
+</head>
+<body>
+	<button id="saveBtn">저장</button>
+	<button id="deleteBtn">삭제</button>
+	<button id="deleteAllBtn">전체삭제</button>
+	<button id="showBtn">내용보기</button>
+</body>
+</html>

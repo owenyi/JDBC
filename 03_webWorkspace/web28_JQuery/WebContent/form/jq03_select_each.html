@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	// 1. each() 함수를 사용해서 배열 안 친구들의 이름을 select>option 만들어서 붙임...append()
+		$('#addOptionBtn').one('click', function() {
+			var arr = ['진철', '은총', '준영', '예람', '우철']; // 선언, 생성, 초기화
+    		$.each(arr, function(index, item) {
+	    		var option = `<option value='${item}'>${item}</option>`;
+	    		$('#friends').append(option);
+	    	});
+		});
+		
+		// 2. 삭제
+		$('#deleteOptionBtn').click(function() {
+			$('#friends>option').remove();
+		});
+	});
+</script>
+
+<style>
+
+</style>
+
+</head>
+<body>
+	<input type="button" value="옵션 생성" id="addOptionBtn">
+	<input type="button" value="옵션 삭제" id="deleteOptionBtn">
+	<select id="friends"></select>
+</body>
+</html>
