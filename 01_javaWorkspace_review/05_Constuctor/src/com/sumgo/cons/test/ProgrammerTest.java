@@ -17,6 +17,8 @@ public class ProgrammerTest {
 		System.out.println(pro1.getInfo()); // 2001-12-5
 		System.out.println(pro2.getInfo());
 		
+		System.out.println("\n===========================================");
+		System.out.println(pro2.getName() + "의 연봉은 " + pro2.getAnnualSalary() + "달러 입니다.");
 	}
 
 }

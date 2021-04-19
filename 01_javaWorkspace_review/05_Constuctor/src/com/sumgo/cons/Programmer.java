@@ -19,7 +19,7 @@ public class Programmer {
 	}
 	
 	public String getInfo() {
-		return name + ", " + gender + ", " + lang + ", " + career + ", " + birthday;
+		return name + ", " + gender + ", " + lang + ", " + career + ", " + birthday.getDate();
 	}
 	
 	// 개발자의 연봉을 리턴하는 기능 (연봉 = 연차 * 1000)
