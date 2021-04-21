@@ -20,5 +20,19 @@
 			</c:forEach>
 		</tr>
 	</table>
+	
+	<h2 align="center"><font color="purple">오늘 본 상품들</font></h2>
+	<!-- 오늘 본 상품 정보를 이곳에다가 테이블 형식으로 출력해보세요 : forEach -->
+	<c:if test="${!empty fruits}">
+		<table align="center"  border=1>
+			<tr>
+				<c:forEach items="${fruits}" var="fruit">
+					<td>
+						<img alt="" src="${fruit}" width=100>
+					</td>
+				</c:forEach>
+			</tr>
+		</table>
+	</c:if>
 </body>
 </html>
