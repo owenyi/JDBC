@@ -1,4 +1,4 @@
-# 15828 Hashing 50점
+# 15829 Hashing 50점
 
 r = 31; M = 1234567891;
 L = int(input())
