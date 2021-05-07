@@ -7,11 +7,13 @@ public class AccountArrayTest1 {
 	public static void main(String[] args) {
 		// 1. Account 타입 배열 생성...사이즈는 3
 		Account[] arr = new Account[3];
-		
+		System.out.println(arr); // FQCN : Full Qualified Class Name
 		// 2. 각각의 칸에 신한, 국민, 우리은행 통장을 생성
 		arr[0] = new Account(100, "신한");
 		arr[1] = new Account(200, "국민");
 		arr[2] = new Account(300, "우리");
+		// toString 없으면 주소값 출력 있으면 Field의 내용 출력
+		System.out.println(arr[0]);
 		
 		// arr[0].bankName = "기업"; // 이게 안 되니까 setter가 필요하다.
 		

@@ -28,4 +28,9 @@ public class Account {
 		balance += amount;
 	}
 	
+	// toString 설명을 위해 추가
+	public String toString() {
+		return balance + ", " + bankName;
+	}
+	
 }
