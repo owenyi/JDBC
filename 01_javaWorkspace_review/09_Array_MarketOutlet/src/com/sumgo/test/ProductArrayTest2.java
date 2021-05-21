@@ -15,6 +15,11 @@ public class ProductArrayTest2 {
 		ProductStoreService service = new ProductStoreService();
 		
 		System.out.println(service.getProductByName(pros, "ปþวม"));
+		
+		Product[] returnPros = service.getProductGTEPrice(pros, 3000);
+		for (Product p : returnPros) System.out.println(p);
+		
+		System.out.println(service.getTotalPrice(pros));
 	}
 
 }
