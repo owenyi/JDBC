@@ -1,3 +1,5 @@
+# N으로 표현
+
 def solution(N, number):
     dp = [-1]
     for i in range(1, 9):
