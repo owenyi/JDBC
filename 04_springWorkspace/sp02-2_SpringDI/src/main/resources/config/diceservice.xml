@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 먼저 3개의 주사위 생성 -->
+	<bean id="diceA" class="spring.service.dice.impl.DiceAImpl"></bean>
+	<bean id="diceB" class="spring.service.dice.impl.DiceBImpl"></bean>
+	<bean id="diceC" class="spring.service.dice.impl.DiceCImpl"></bean>
+	
+	<!-- 
+		player01 빈 :: diceA 생성자 주입
+		player02 빈 :: diceB 생성자 주입
+		player03 빈 :: diceC setter 주입
+		player04 빈 :: diceA setter 주입
+	 -->
+	<bean id="player01" class="spring.service.dice.play.Player02">
+		<constructor-arg ref="diceA"></constructor-arg>
+	</bean>
+	<bean id="player02" class="spring.service.dice.play.Player02">
+		<constructor-arg ref="diceB"></constructor-arg>
+	</bean>
+	<bean id="player03" class="spring.service.dice.play.Player02">
+		<property name="dice" ref="diceC"></property>
+	</bean>
+	<bean id="player04" class="spring.service.dice.play.Player02">
+		<property name="dice" ref="diceA"></property>
+	</bean>
+</beans>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 사용자정의 빈 :: id = user01 // setter 단순 파라미터 주입 :: userId = 01유저, age = 01 -->
+	<bean id="user01" class="spring.service.domain.User">
+		<property name="userId" value="01유저"></property>
+		<property name="age" value="01"></property>
+	</bean>
+	
+	<!-- API 빈 :: id="password" class="java.lang.String // 생성자 주입, 단순 파라미터 값 7777 -->
+	<bean id="password" class="java.lang.String">
+		<constructor-arg value="7777"></constructor-arg>
+	</bean>
+	<!-- 사용자정의 빈 :: id = user02 // setter 단순 파라미터 주입 :: 02유저, 02, password = password -->
+	<bean id="user02" class="spring.service.domain.User">
+		<property name="userId" value="02유저"></property>
+		<property name="age" value="02"></property>
+		<property name="password" ref="password"></property>
+	</bean>
+	
+	<!-- 사용자정의 빈 :: id = user03 // DI 없음 -->
+	<bean id="user03" class="spring.service.domain.User" />
+	
+	<!-- 사용자정의 빈 :: id = user04 // 생성자 주입 :: 04유저, 04 -->
+	<!-- 여러 개의 인자를 생성자로 주입하는 경우 순서 갯수 타입을 정확하게 지켜줘야하기 때문에 setter 주입에 비해서 다소 까다로운 측면이 있다. -->
+	<!-- 내 생각에는 생성자를 여러 모양으로 만들어야 되기 때문인 것 같다. 필드가 3개만 있어도 2^3=8개 생성자 만들어야 한다. -->
+	<bean id="user04" class="spring.service.domain.User">
+		<!-- 
+		<constructor-arg value="04유저" />
+		<constructor-arg value="04" />
+		 -->
+		<!-- 얘는 잘 안 씀
+		<constructor-arg name="userId" value="04유저" />
+		<constructor-arg name="age" value="04" />
+		 -->
+		<constructor-arg value="04유저" index="1" />
+		<constructor-arg value="04" index="0" />
+	</bean>
+	
+	<!-- 사용자정의 빈 :: id = user05 // 생성자 주입 :: 05유저, 05, 0505 // 옵션 :: type, index를 함께 사용해서 완벽하게 실행 -->
+	<bean id="user05" class="spring.service.domain.User">
+		<!-- 
+		<constructor-arg value="05유저" index="2" />
+		<constructor-arg value="05" index="0" />
+		<constructor-arg value="0505" index="1" />
+		 -->
+		<constructor-arg value="05유저" type="String" />
+		<constructor-arg value="05" type="int" />
+		<constructor-arg value="0505" index="1" />
+	</bean>
+</beans>
