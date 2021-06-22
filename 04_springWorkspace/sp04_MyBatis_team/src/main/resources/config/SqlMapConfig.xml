@@ -27,5 +27,6 @@
  	
  	<mappers>
  		<mapper resource="mapper/book_mapping.xml"/>
+ 		<mapper resource="mapper/mybatis-bookservice-mapping10.xml"/>
  	</mappers>
 </configuration>

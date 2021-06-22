@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	 
+	<!-- 
+	<properties resource="config/dbconn.properties"></properties>
+	-->
+	
+	<!-- 추가 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<!-- 2. 디비 하나의 row를 인스턴스화 시킨 클래스...vo -->	
+	<typeAliases>
+		<package name="com.encore.mybatis.vo"/><!-- vo alias를 lowerCamelCase로 -->
+	</typeAliases>
+	
+	<!--  
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="${jdbc.mysql.driver}"/>
+				<property name="url" value="${jdbc.mysql.url}"/>
+				<property name="username" value="${jdbc.mysql.username}"/>
+				<property name="password" value="${jdbc.mysql.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+ 	-->
+ 	
+ 	<mappers>
+ 		<mapper resource="mapper/book_mapping.xml"/>
+ 		<mapper resource="mapper/mybatis-bookservice-mapping101.xml"/>
+ 	</mappers>
+</configuration>
