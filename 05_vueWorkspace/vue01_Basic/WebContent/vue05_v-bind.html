@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>v-bind : 속성같은 것들을 모델의 데이터로 연결시키는 방법</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+	$(function() {
+		var model = {prop1: "center",
+			prop2: "http://sample.bmaster.kro.kr/photos/61.jpg"
+		};
+		var app = new Vue({
+			el: "#app",
+			data: model
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="app">
+		<!-- 속성을 지정...속성의 값으로 prop1, prop2를 바인딩 -->
+		<!--
+		<h3 v-bind:align="prop1">안녕하세요(가운데 정렬 설정)</h3>
+		<img v-bind:src="prop2">
+		-->
+		
+		<!-- v-bind 생략 가능 -->
+		<h3 :align="prop1">안녕하세요(가운데 정렬 설정)</h3>
+		<img :src="prop2">
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+	$(function() {
+		var person = {
+			name: "이상순",
+			age: 27,
+			address: "인천"
+		};
+		var app = new Vue({
+			el: '#app',
+			data: person
+		});
+	});
+</script>
+<style>
+	#app table {
+		border: solid 1px;
+	}
+	#app td {
+		border: solid 1px;
+	}
+</style>
+</head>
+<body>
+	<div id="app">
+		<table>
+			<tr><td>name</td><td>{{name}}</td></tr>
+			<tr><td>age</td><td v-text="age"></td></tr>
+			<tr><td>address</td><td v-html="address"></td></tr>
+		</table>
+	</div>
+</body>
+</html>
+<!-- 
+해보기
+모델 데이터에 이름, 나이, 사는 곳 관련 데이터를 지정
+ -->
