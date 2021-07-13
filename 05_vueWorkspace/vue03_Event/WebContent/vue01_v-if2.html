@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>template 태그의 사용법</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div v-html="title"></div>
+		<input v-model="grade">
+		<template v-if="grade=='A'">
+			<div>grade의</div>
+			<div>값이</div>
+			<div>A인 경우입니다.</div>
+		</template>
+		<template v-else>
+			<div>grade의</div>
+			<div>값이</div>
+			<div>A가 아닌 경우입니다.</div>
+		</template>
+	</div>
+</body>
+<script>
+	var model = {
+		title: "ENCORE",
+		grade: "A"
+	};
+	var app = new Vue({
+		el: "#app",
+		data: model
+	});
+</script>
+</html>

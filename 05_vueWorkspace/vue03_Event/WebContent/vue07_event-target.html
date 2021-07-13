@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 
+	v-pre 디렉티브는 해당 태그와 그 자식 태그들이 Vue를 사용하지 않는다고 알려주는 디렉티브다.
+	Vue를 사용하지 않는 코드들을 컴파일하지 않고 skip하기 때문에 그 코드의 내용이 길수록 컴파일 향상에 도움을 준다.
+ -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<h2 v-pre>{{이 부분은 그대로 출력 원합니다.}}</h2>
+	<div id="app">
+		<button @click="greet">Greet</button>
+	</div>
+</body>
+<script>
+	new Vue({
+		el: "#app",
+		data: {
+			name: "Vue.js"
+		},
+		methods: {
+			greet: function(event) { // event 단독으로 매개변수일 때는 달러($)를 안 붙여도 됨
+				alert("Hello " + this.name + "!!!");
+				console.info(event.target);
+			}
+		}
+	});
+</script>
+</html>

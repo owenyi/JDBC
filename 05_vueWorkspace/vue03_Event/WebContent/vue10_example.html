@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+	h1 {
+		color: blue;
+	}
+	div {
+		text-align: center;
+	}
+	#result {
+		color: red;
+	}
+</style>
+</head>
+<body>
+	<div id="example">
+		<h1>ENCORE INFORMATION</h1>
+		<h2>Sign Up Form</h2>
+		<form action="vue09_event_prevent.html">
+			아이디 <input type="text" v-model="id"><br>
+			패스워드 <input type="text" v-model="pwd"><br>
+			이름 <input type="text" v-model="name"><br>
+			주소 <input type="text" v-model="addr"><br>
+			전화번호 <input type="text" v-model="tel"><br>
+			<button @click="sendInfo">사원추가</button>
+		</form>
+	</div>
+	
+	<br><br>
+	
+	<div id="result">
+		{{info}}
+	</div>
+</body>
+<script>
+	var model = {
+		id: "",
+		pwd: "",
+		name: "",
+		addr: "",
+		tel: ""
+	}
+	var example = new Vue({
+		el: "#example",
+		data: model,
+		methods: {
+			sendInfo(event) {
+				event.preventDefault();
+				if (this.id === "")
+					alert("아이디를 입력하세요.");
+				else if (this.pwd === "")
+					alert("패스워드를 입력하세요.");
+				else {
+					var info = this.id + " " + this.pwd + " " + this.name + " " + this.addr + " " + this.tel;
+					result.info = info;
+				}
+			}
+		}
+	});
+	
+	var result = new Vue({
+		el: "#result",
+		data: {
+			info: ""
+		}
+	});
+</script>
+</html>

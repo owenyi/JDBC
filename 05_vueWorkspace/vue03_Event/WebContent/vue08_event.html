@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 
+	이벤트
+	1) 클릭 이벤트
+	2) 키 이벤트
+ -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<form action="vue07_event-target.html" @submit.prevent="dataCheck"><!-- 막아놨음...대신 dataCheck -->
+			아이디 : 
+			<input type="text" placeholder="아이디 입력..." v-model="id" id="id">
+			<input type="text" placeholder="아이디 입력..." v-model="id" @keyup.enter="sendId">
+			<input type="text" placeholder="아이디 입력..." v-model="id" @keyup.13="submit"><!-- enter 치면 form action의 페이지로 이동 -->
+			<button @click="sendId">결과보기</button>
+		</form>
+	</div>
+</body>
+<script>
+	new Vue({
+		el: "#app",
+		data: {
+			id: ""
+		},
+		methods: {
+			sendId() {
+				alert(this.id);
+			},
+			dataCheck() {
+				alert(document.getElementById("id").getAttribute("placeholder"));
+			}
+		}
+	});
+</script>
+</html>
