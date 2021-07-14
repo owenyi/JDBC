@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="./table.css" />
+    <title>ENCORE HRM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+	<div id='app'>
+        <div class='headtitle'>
+            <h2>ENCORE HRM LIST</h2>
+        </div>
+        <div class='search_box'>
+            <a href='./index04.html'>사원추가</a> |
+            <a href='./index03.html'>이름으로 찾기</a> |
+            <a href='./index02.html'>아이디로 찾기</a> |
+            <a href='./index01.html'>모든사원 보기</a>
+        </div>     
+		
+	    <!--정보입력 FORM 시작//-->
+		<FORM METHOD="post" v-on:submit.prevent="submitFrm" name="regFrm">
+		
+			<table class="content_table">
+				<tr>
+					<th>이름</th>
+					<td>&nbsp;&nbsp;
+						<input type="text" name="name" v-model="frm.name" required="required">
+					</td>			
+				</tr>	
+				<tr>
+					<th>이메일</th>
+					<td>&nbsp;&nbsp;
+						<input type="text" name="mailid" v-model="frm.mailid">
+					</td>			
+				</tr>	
+				<tr>
+					<th>고용일</th>
+					<td>&nbsp;&nbsp;
+						<input type="date" name="start_date" v-model="frm.start_date">
+					</td>
+				</tr>	
+				<tr v-if="!loading">
+					<th>관리자</th>
+					<td>&nbsp;&nbsp;  
+						<select name="manager_id" v-model="frm.manager_id" required>
+							<option v-for="emp in info" :value="emp.id">
+								{{emp.id}} : {{emp.name}}
+							</option>
+						</select>
+				   </td>
+				</tr>	
+				<tr v-if="!loading"> 
+					<th>직책</th>
+					<td>&nbsp;&nbsp;  
+						<select name="title" v-model="frm.title" required>
+							<option v-for="t in titles" :value="t.title">
+								{{t.title}}
+							</option>
+						</select>
+				   </td>
+				</tr>
+				<tr v-if="!loading">
+					<th>부서</th>
+					<td>&nbsp;&nbsp;  
+						<select name="dept_id" v-model="frm.dept_id" required>
+							<option v-for="department in departments" :value="department.dept_id">
+								{{department.dept_id}}
+							</option>
+						</select>
+				   </td>
+				</tr>
+				<tr>
+					<th>월급</th>
+					<td>&nbsp;&nbsp;
+						<input type="text" name="name" v-model="frm.salary">
+					</td>			
+				</tr>	
+				<tr>
+					<th>커미션</th>
+					<td>&nbsp;&nbsp;
+						<input type="text" name="name" v-model="frm.commission_pct">
+					</td>			
+				</tr>	
+				<tr>
+					<td style="text-align: center; height: 60px;" colspan="2"><input type="submit" value="사원 추가"></td>
+				</tr>
+			</table>
+		</FORM>
+		<!--정보입력 FORM 끝//-->
+	</div>
+    <script>
+        var app = new Vue({
+            el: "#app",           
+            data(){
+                return {
+                    info:[ ],
+                    loading:true,
+                    errored:false,
+                    titles: [ ],
+                    departments: [ ],
+                    frm: {}
+                }
+            },
+            methods: {
+            	submitFrm() {
+            		axios
+	                .post('http://127.0.0.1:7788/api/addEmployee', this.frm)
+	                .then(response=> (location.replace('./index01.html')))
+	                .catch(error=>{
+	                    console.log(error);
+	                    this.errored = true
+	                })
+            	}
+            },
+            mounted(){
+            	var loadingCnt = 0;
+            	
+                axios
+                .get('http://127.0.0.1:7788/api/findAllEmployees')
+                .then(response=>(this.info = response.data))
+                .catch(error=>{
+                    console.log(error);
+                    this.errored = true
+                })
+                .finally(()=>{
+                	loadingCnt += 1;
+                	if (loadingCnt == 3) this.loading = false;
+                })
+                
+                axios
+                .get('http://127.0.0.1:7788/api/findAllDepartments')
+                .then(response=>(this.departments = response.data))
+                .catch(error=>{
+                    console.log(error);
+                    this.errored = true
+                })
+                .finally(()=>{
+                	loadingCnt += 1;
+                	if (loadingCnt == 3) this.loading = false;
+                })
+                
+                axios
+                .get('http://127.0.0.1:7788/api/findAllTitles')
+                .then(response=>(this.titles = response.data))
+                .catch(error=>{
+                    console.log(error);
+                    this.errored = true
+                })
+                .finally(()=>{
+                	loadingCnt += 1;
+                	if (loadingCnt == 3) this.loading = false;
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
