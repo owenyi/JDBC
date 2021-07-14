@@ -33,7 +33,7 @@ public class EmployeeServiceTest {
 		System.out.println("===== 3. findByAddress calling =====");
 		Employee[] empArr = service.findByAddress(ea, "³íÇöµ¿");
 		for (Employee employee : empArr)
-			service.printInfo(employee);
+			if (employee != null) service.printInfo(employee);
 		
 		System.out.println("===== 4. getAnnualSalary calling =====");
 		System.out.println(service.getAnnualSalary(e)); // 450 * 12

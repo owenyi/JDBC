@@ -2,6 +2,7 @@ package poly.service.impl;
 
 import poly.service.EmployeeService;
 import poly.vo.Employee;
+import poly.vo.Engineer;
 /*
  * Singleton Pattern
  * 하나의 클래스로부터 하나의 객체만 생성하도록 하는 패턴
@@ -30,26 +31,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findByEmpId(Employee[] ea, String empId) {
-		// TODO Auto-generated method stub
-		return null;
+		Employee emp = null;
+		for (Employee e : ea) {
+			if (e.getEmpId().equals(empId))
+				emp = e;
+		}
+		return emp;
 	}
 
 	@Override
 	public Employee[] findByAddress(Employee[] ea, String addr) {
-		// TODO Auto-generated method stub
-		return null;
+		Employee[] emps = new Employee[ea.length];
+		int idx = 0;
+		for (Employee e : ea) {
+			if (e.getAddr().equals(addr))
+				emps[idx++] = e;
+		}
+		return emps;
 	}
 
 	@Override
 	public int getAnnualSalary(Employee e) {
-		// TODO Auto-generated method stub
-		return 0;
+		int salary = 12 * e.getSalary();
+		if (e instanceof Engineer) salary += ((Engineer) e).getBonus();
+		return salary;
 	}
 
 	@Override
 	public int getTotalCost(Employee[] ea) {
-		// TODO Auto-generated method stub
-		return 0;
+		int sum = 0;
+		for (Employee e : ea) {
+			sum += service.getAnnualSalary(e);
+		}
+		return sum;
 	}
 
 }
