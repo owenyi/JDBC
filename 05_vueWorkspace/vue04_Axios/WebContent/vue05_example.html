@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script><!-- axios cdn -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+	#list {
+		width: 800px;
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	#list td, #list th {
+		border: 1px solid black;
+		text-align: center;
+	}
+	#list>thead>tr {
+		color: white;
+		background-color: #3c5ad6;
+	}
+	
+	#app {
+		width: 800px;
+		text-align: center;
+	}
+	#app>h2 {
+		color: blue;
+	}
+</style>
+</head>
+<body>
+	<div id="app">
+		<section v-if="errored">
+			<p>Error In Axios Transport...</p>
+		</section>
+		
+		<section v-else>
+			<div v-if="loading">Loading...</div>
+			<h2>Encore HRM LIST</h2>
+			<a href="#">사원추가</a> | <a href="#">이름으로 찾기</a> | <a href="#">아이디로 찾기</a> | <a href="#">모든사원 보기</a>
+			<hr>
+			<table id="list">
+				<thead>
+					<tr>
+						<th>사원 아이디</th><th>사원명</th><th>부서</th><th>직책</th><th>연봉</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="e in emps">
+						<td>{{e.id}}</td>
+						<td>{{e.name}}</td>
+						<td>{{e.dept_name}}</td>
+						<td>{{e.title}}</td>
+						<td>{{e.salary | toFloat}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</div>
+</body>
+<script>
+	var app = new Vue({
+		el: "#app",
+		data() {
+			return {
+				emps: null,
+				errored: false,
+				loading: true
+			}
+		},
+		filters: {
+			toFloat(value) {
+				return value + ".00";
+			}
+		},
+		mounted() {
+			axios
+				.get("http://localhost:7788/api/findAllEmployees")
+				.then(response => (this.emps = response.data))
+				.catch(error => {
+					console.log(error);
+					this.errored = true;
+				})
+				.finally(() => this.loading = false);
+		}
+	});
+</script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 
+	Vue 인스턴스가 생성될 때 내부적으로 중요한 몇 단계를 거친다.
+	이를 라이프 싸이클이라고 한다.
+	
+	1. created 호출(후킹)
+	    Vue 인스턴스 생성 직후 created가 호출...훅된다.
+	    이 때 el, data, methods, filters, computed...같은 속성들이 활성화된다.
+	2. mounted 호출
+	    HTML DOM에 Vue el의 관찰대상인 화면 영역에 data가 바인딩
+	    모델에서 받아온 데이터를 el에서 지정한 영역으로 렌더링
+	    axios를 여기서 해야함
+	3. beforeUpdate, updated가 반복적으로 호출
+	    한 번 렌더링 된 값이 계속적으로 변경될 때마다 계속 호출
+	4. destroyed 호출
+	    Vue 인스턴스가 메모리에서 사라짐
+ -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<span>클릭 카운트 : {{count}}</span>
+		<button @click="count++">카운트 증가</button>
+	</div>
+</body>
+<script>
+	new Vue({
+		el: "#app",
+		data: {
+			count: 0
+		},
+		beforeCreate: function() {
+			console.log("beforeCreate..." + this.count);
+		},
+		created: function() {
+			console.log("created..." + this.count);
+		},
+		beforeMount: function() {
+			console.log("beforeMount...연결된 DOM 엘러먼트 : " + this.$el);
+		},
+		mounted: function() {
+			console.log("mounted...연결된 DOM 엘러먼트 : " + this.$el);
+		},
+		beforeUpdate: function() {
+			console.log("beforeUpdate..." + this.count);
+		},
+		updated: function() {
+			console.log("updated..." + this.count);
+		}
+	})
+</script>
+</html>
