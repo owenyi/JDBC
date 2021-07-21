@@ -14,17 +14,23 @@ public class PizzaServiceImpl implements PizzaService {
 	@Override
 	public void makePizza(Pizza pizza) {
 		// 피자 만드는 순서대로 method를 실행
-		
+		pizza.dough();
+		pizza.topping();
+		pizza.bake();
+		pizza.cutting();
+		pizza.boxing();
 	}
 
 	@Override
 	public void allMakePizza(Pizza[] pizzas) {
 		// pizza의 배열을 받아와서 각 피자에 makePizza를 실행
-//		for (Pizza p : pizzas) {
-//			// pizza 정보 출력(toString)
-//			// pizza 만드는 과정 출력
-//			System.out.println("====================");
-//		}
+		for (Pizza p : pizzas) {
+			// pizza 정보 출력(toString)
+			System.out.println(p);
+			// pizza 만드는 과정 출력
+			makePizza(p);
+			System.out.println("====================");
+		}
 	}
 
 }
